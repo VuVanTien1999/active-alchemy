@@ -29,6 +29,8 @@ from paginator import Paginator
 import inflection
 import sqlalchemy_utils as sa_utils
 import arrow
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 
 DEFAULT_PER_PAGE = 10
 
@@ -238,7 +240,8 @@ class Model(BaseModel):
     """
     Model create
     """
-    id = Column(Integer, primary_key=True)
+    # id = Column(Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     created_at = Column(sa_utils.ArrowType, default=utcnow)
     updated_at = Column(sa_utils.ArrowType, default=utcnow, onupdate=utcnow)
     is_deleted = Column(Boolean, default=False, index=True)
